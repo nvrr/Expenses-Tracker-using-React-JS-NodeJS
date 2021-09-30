@@ -23,6 +23,7 @@ export default function LoginPage(props) {
         config: {headers: {'content-type': 'application/json'}}
     }).then(res => {
         if(res.data.code == '999'){
+            localStorage.setItem('userobj',JSON.stringify(res.data));
             context.dispatch({type: 'USER_LOGGEDIN'})
             context.dispatch({type: 'SET_USEROBJ', payload: res.data});
             props.nav.replace('/dashboard')

@@ -4,7 +4,7 @@ import axios from 'axios';
 import {API_URL} from './Const';
 
 
-export default function callSvc(inpobj, pathname) {
+export default function callSvc(inpobj, pathname,setdata, seterr) {
     axios({
         method: 'POST',
         url: API_URL + pathname,

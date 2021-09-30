@@ -1,5 +1,5 @@
 // hg'' HG""
-import React ,{ useContext,useEffect,useState } from 'react';
+import React ,{ useContext,useEffect,useState,useLayoutEffect } from 'react';
 import { AppContext } from '../App';
 
 import Members from '../pages/Members';
@@ -14,6 +14,37 @@ function SideNav(props){
     console.log(props);
     const context = useContext(AppContext);
 
+    useLayoutEffect(function(){
+        console.log('useLayoutEffect');
+        let userobj = localStorage.getItem('userobj');
+        if(userobj){
+            userobj = JSON.parse(userobj);
+            if(userobj.hhid){
+                context.dispatch({type: 'USER_LOGGEDIN'});
+                context.dispatch({type: 'SET_USEROBJ',payload: userobj})
+            }
+        }
+    },[]);
+
+    useEffect(() => {
+        console.log('useEffect');
+        let userobj = localStorage.getItem('userobj');
+        let userLoggedIn = false;
+        if(userobj){
+            userobj = JSON.parse(userobj)
+            if(userobj.hhid){
+                userLoggedIn = true;
+            }
+        }
+
+        let path = props.location.pathname;
+        if((path == '/members' || path == '/transactions' || path == '/reminders' || 
+             path == '/dashboard') && (!userLoggedIn)){ 
+
+                props.history.replace('/login')
+             }
+    },[props.location.pathname])
+
 
     return (<>
         {
@@ -21,7 +52,7 @@ function SideNav(props){
       ? <LoginPage nav={props.history} /> :
 
         <div>
-           <TopNav/>
+           <TopNav nav={props.history}/>
 
            {/* grid */}
             <div className='p-grid'>
