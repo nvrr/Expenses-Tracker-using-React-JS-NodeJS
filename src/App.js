@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+// hg'' HG""
+import React,{useReducer} from 'react';
+import { BrowserRouter as Router,Route, Switch } from 'react-router-dom';
+import { createContext } from 'react';
+import InitState from './reducers/InitState';
+import appReducer from './reducers/Reducer';
+//pages
+import SideNav from './components/SideNav';
+import TopNav from './components/TopNav';
+//primeReact
+import 'primeflex/primeflex.css';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+//Context
+export const AppContext = createContext(null);
 
 function App() {
+
+  const [state, dispatch] = useReducer(appReducer, InitState)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={{state:state, dispatch:dispatch}}>
+      <Router>
+        <Route component={SideNav} />
+      </Router>
+    </AppContext.Provider>
   );
 }
 
