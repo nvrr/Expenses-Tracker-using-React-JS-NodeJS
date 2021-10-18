@@ -1,0 +1,17 @@
+{
+  "name": "spxserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "k",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "ng2-charts": "^2.4.3",
+    "react": "^17.0.2",
+    "uuid": "^8.3.2"
+  }
+}
